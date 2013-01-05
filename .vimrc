@@ -17,15 +17,16 @@ endif
 " プラグインリスト
 NeoBundle 'Shougo/neobundle.vim.git'
 NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+\ }
 NeoBundle 'Shougo/neocomplcache.git'
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'git://github.com/honza/snipmate-snippets.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/mattn/zencoding-vim.git'
 NeoBundle 'https://github.com/tpope/vim-surround'
@@ -132,6 +133,23 @@ let g:neocomplcache_min_syntax_length = 3
 
 "ポップアップメニューで表示される候補の数。初期値は100
 let g:neocomplcache_max_list = 20
+
+"}}}
+
+"--------------------------------------------------
+" neosnippetの設定"{{{
+"--------------------------------------------------
+" honzaさんsnipmateをベースに自分のも使えるようにする
+let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets,~/.vim/snippets'
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For snippet_complete marker. <= これが何かはよくわかってない
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 "}}}
 
