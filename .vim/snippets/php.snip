@@ -1,0 +1,65 @@
+# ----------------------------------------
+# php
+# ----------------------------------------
+
+snippet error_study_mode
+  error_reporting(E_ALL | E_STRICT);
+  ini_set('display_errors', 'On');
+
+snippet reader
+  public funtion get${1:variable_name} {
+    return $this->${2:variable_name};
+  }
+
+snippet writer
+  public function set${1:variable_name}($value) {
+    $this->${2:variable_name} = $value;
+  }
+
+
+
+# ----------------------------------------
+# wordpress
+# ----------------------------------------
+snippet page-template
+  <?php
+  /*
+  Template Name: faq
+  */
+  ?>
+
+snippet taxonomy
+  function ${1:type_name}_custom_post_type() {
+    $labels = array(
+      'name' => '_replace_name_',
+      'singular_name' => '_replace_name_',
+      'add_new_item' => '新規replace_nameを追加',
+      'add_new' => '新規追加',
+      'new_item' => '新規_replace_name_',
+      'view_item' => '_replace_name_を表示',
+      'not_found' => '_replace_name_は見つかりませんでした',
+      'not_found_in_trach' => 'ゴミ箱に_replace_name_はありません。',
+      'search_items' => '_replace_name_を検索',
+    );
+
+    $args = array(
+      'labels' => $labels,
+      'public' => true,
+      'show_ui' => true,
+      'query_var' => true,
+      'hierarchical' => true,
+      'menu_position' => null, // 5=投稿の下,10=メディアの下,20=ページの下
+      'supports' => array('title','editor','thumbnail','excerpt','page-attributes','slug'),
+      'rewrite' => array('slug' => urlencode('${7:日本語パーマリンクURL}') ),
+    );
+    register_post_type('${2:type_name}',$args);
+
+    $args = array(
+      'label' => '${3:type_name}のカテゴリー',
+      'public' => true,
+      'show_ui' => true,
+      'hierarchical' => true,
+    );
+    register_taxonomy('${4:cat_name}','${5:type_name}',$args);
+  }
+  add_action('init','${6:type_name}_custom_post_type');
